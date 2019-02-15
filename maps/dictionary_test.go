@@ -5,15 +5,53 @@ import "testing"
 func TestSearch(t *testing.T) {
 	dictionary := Dictionary{"test": "this is just a test"}
 
-	got := dictionary.Search("test")
-	want := "this is just a test"
+	t.Run("known word", func(t *testing.T) {
+		got, _ := dictionary.Search("test")
+		want := "this is just a test"
 
-	assertString(t, got, want)
+		assertString(t, got, want)
+	})
+
+	t.Run("unknown word", func(t *testing.T) {
+		_, err := dictionary.Search("unknown")
+
+		assertError(t, err, ErrorNotFound)
+
+	})
+}
+
+func TestAdd(t *testing.T) {
+	dictionary := Dictionary{}
+	word := "test1"
+	definition := "this is just a test1"
+
+	dictionary.Add(word, definition)
+	assertDefinition(t, dictionary, word, definition)
+}
+
+func assertDefinition(t *testing.T, dictionary Dictionary, word, definition string) {
+	t.Helper()
+	got, err := dictionary.Search(word)
+
+	if err != nil {
+		t.Fatal("should find added word:", err)
+	}
+
+	if definition != got {
+		t.Errorf("got '%s', but want '%s'", got, definition)
+	}
+}
+
+func assertError(t *testing.T, got, want error) {
+	t.Helper()
+	if got != want {
+		t.Errorf("got %s, but want %s", got, want)
+	}
 }
 
 func assertString(t *testing.T, got, want string) {
 	t.Helper()
 	if got != want {
-		t.Errorf("got %s, but want %s, and given %s", got, want, "test")
+		t.Errorf("got %s, but want %s", got, want)
 	}
 }
