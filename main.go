@@ -1,15 +1,15 @@
-package main
+// package main
 
-import "fmt"
+// import "fmt"
 
-func main() {
-	numbers := make([]int, 10)
+// func main() {
+// 	numbers := make([]int, 10)
 
-	for i := 0; i < 10; i++ {
-		numbers[i] = i
-	}
+// 	for i := 0; i < 10; i++ {
+// 		numbers[i] = i
+// 	}
 
-	for i, val := range numbers {
-		fmt.Println("index %d value %d", i, val)
-	}
-}
+// 	for i, val := range numbers {
+// 		fmt.Println("index %d value %d", i, val)
+// 	}
+// }
